@@ -1,10 +1,16 @@
-# silly_hacks
+<h1 align="center">silly-hacks</h1>
 
-A new Flutter application.
+<b><p align="center">:man_cook: Hack In Progress :man_cook:</p></b>
+
+<p align="center">My submission for <a href="https://sillyhacks.online">Silly Hacks Hackathon</a></p>
+
+## Tech Stack
+
+- [Dart](https://dart.dev)
+- [Flutter](https://flutter.dev)
+- ...
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
