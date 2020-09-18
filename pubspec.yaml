@@ -16,6 +16,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.3
   demoji:
+  screenshot:
+  http:
 
 dev_dependencies:
   flutter_test:
