@@ -22,6 +22,9 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
     super.initState();
     _shakeDetector = ShakeDetector.autoStart(
       onPhoneShake: () {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Device Shake ${Demoji.smirk}'),
+        ));
         setState(() {});
       },
     );
