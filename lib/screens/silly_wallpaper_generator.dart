@@ -16,12 +16,10 @@ class SillyWallpaperGenerator extends StatefulWidget {
 }
 
 class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
-  ShakeDetector _shakeDetector;
-
   @override
   void initState() {
     super.initState();
-    _shakeDetector = ShakeDetector.autoStart(
+    ShakeDetector.autoStart(
       onPhoneShake: () {
         Vibration.vibrate();
         setState(() {});

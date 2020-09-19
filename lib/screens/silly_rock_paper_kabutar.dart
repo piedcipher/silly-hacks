@@ -9,8 +9,6 @@ class SillyRockPaperKabutar extends StatefulWidget {
 }
 
 class _SillyRockPaperKabutarState extends State<SillyRockPaperKabutar> {
-  ShakeDetector _shakeDetector;
-
   bool _computerRock = true;
   bool _computerPaper = true;
   bool _computerKabutar = true;
@@ -25,7 +23,7 @@ class _SillyRockPaperKabutarState extends State<SillyRockPaperKabutar> {
   @override
   void initState() {
     super.initState();
-    _shakeDetector = ShakeDetector.autoStart(
+    ShakeDetector.autoStart(
       onPhoneShake: () {
         if (_playerMoves.length == 1 && _computerMoves.length == 1) {
           String result = '';
