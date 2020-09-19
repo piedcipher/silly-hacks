@@ -1,5 +1,5 @@
 name: silly_hacks
-description: My submission for [Silly Hacks Hackathon](https://sillyhacks.online)
+description: My submission for Silly Hacks Hackathon (https://sillyhacks.online)
 publish_to: 'none'
 authors:
   - Tirth Patel
@@ -22,6 +22,7 @@ dependencies:
   path_provider:
   path:
   share_extend:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
