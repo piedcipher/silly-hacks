@@ -2,6 +2,7 @@ import 'package:demoji/demoji.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shake/shake.dart';
+import 'package:vibration/vibration.dart';
 
 class SillyRockPaperKabutar extends StatefulWidget {
   @override
@@ -25,111 +26,8 @@ class _SillyRockPaperKabutarState extends State<SillyRockPaperKabutar> {
     super.initState();
     ShakeDetector.autoStart(
       onPhoneShake: () {
-        if (_playerMoves.length == 1 && _computerMoves.length == 1) {
-          String result = '';
-          if ((_playerMoves[0] == Demoji.moyai &&
-                  _computerMoves[0] == Demoji.moyai) ||
-              (_playerMoves[0] == Demoji.newspaper &&
-                  _computerMoves[0] == Demoji.newspaper) ||
-              (_playerMoves[0] == Demoji.bird &&
-                  _computerMoves[0] == Demoji.bird)) {
-            // Tie
-            result = 'Tie';
-          } else if ((_computerMoves[0] == Demoji.newspaper &&
-                  _playerMoves[0] == Demoji.moyai) ||
-              (_computerMoves[0] == Demoji.bird &&
-                  _playerMoves[0] == Demoji.newspaper) ||
-              (_computerMoves[0] == Demoji.moyai &&
-                  _computerMoves[0] == Demoji.bird)) {
-            // Computer Wins
-            result = 'Computer Wins';
-          } else if ((_playerMoves[0] == Demoji.newspaper &&
-                  _computerMoves[0] == Demoji.moyai) ||
-              (_playerMoves[0] == Demoji.bird &&
-                  _computerMoves[0] == Demoji.newspaper) ||
-              (_playerMoves[0] == Demoji.moyai &&
-                  _computerMoves[0] == Demoji.bird)) {
-            // Player Wins
-            result = 'You Win';
-          }
-          SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
-            await showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(
-                  result,
-                  textAlign: TextAlign.center,
-                ),
-                content: Table(
-                  children: [
-                    TableRow(
-                      children: [
-                        Text(
-                          'You',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          'Computer',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                    TableRow(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(16),
-                          child: Text(
-                            _playerMoves[0],
-                            style: TextStyle(fontSize: 24),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(16),
-                          child: Text(
-                            _computerMoves[0],
-                            style: TextStyle(fontSize: 24),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                actions: [
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        _computerPaper = true;
-                        _computerRock = true;
-                        _computerKabutar = true;
-                        _playerPaper = true;
-                        _playerRock = true;
-                        _playerKabutar = true;
-                        _playerMoves = [
-                          Demoji.moyai,
-                          Demoji.newspaper,
-                          Demoji.bird
-                        ];
-                        _computerMoves = [
-                          Demoji.moyai,
-                          Demoji.newspaper,
-                          Demoji.bird
-                        ];
-                      });
-                    },
-                    child: Text('Play Again'),
-                  ),
-                ],
-              ),
-            );
-          });
-          return;
-        }
+        Vibration.vibrate();
+        if (_playerMoves.length == 1 && _computerMoves.length == 1) return;
         _playerMoves.shuffle();
         _computerMoves.shuffle();
         setState(() {
@@ -162,6 +60,112 @@ class _SillyRockPaperKabutarState extends State<SillyRockPaperKabutar> {
 
   @override
   Widget build(BuildContext context) {
+    if (_playerMoves.length == 1 && _computerMoves.length == 1) {
+      String result = '';
+      if ((_playerMoves[0] == Demoji.moyai &&
+              _computerMoves[0] == Demoji.moyai) ||
+          (_playerMoves[0] == Demoji.newspaper &&
+              _computerMoves[0] == Demoji.newspaper) ||
+          (_playerMoves[0] == Demoji.bird &&
+              _computerMoves[0] == Demoji.bird)) {
+        // Tie
+        result = 'Tie';
+      } else if ((_computerMoves[0] == Demoji.newspaper &&
+              _playerMoves[0] == Demoji.moyai) ||
+          (_computerMoves[0] == Demoji.bird &&
+              _playerMoves[0] == Demoji.newspaper) ||
+          (_computerMoves[0] == Demoji.moyai &&
+              _computerMoves[0] == Demoji.bird)) {
+        // Computer Wins
+        result = 'Computer Wins';
+      } else if ((_playerMoves[0] == Demoji.newspaper &&
+              _computerMoves[0] == Demoji.moyai) ||
+          (_playerMoves[0] == Demoji.bird &&
+              _computerMoves[0] == Demoji.newspaper) ||
+          (_playerMoves[0] == Demoji.moyai &&
+              _computerMoves[0] == Demoji.bird)) {
+        // Player Wins
+        result = 'You Win';
+      }
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: Text(
+              result,
+              textAlign: TextAlign.center,
+            ),
+            content: Table(
+              children: [
+                TableRow(
+                  children: [
+                    Text(
+                      'You',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Computer',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(16),
+                      child: Text(
+                        _playerMoves[0],
+                        style: TextStyle(fontSize: 30),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(16),
+                      child: Text(
+                        _computerMoves[0],
+                        style: TextStyle(fontSize: 30),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    _computerPaper = true;
+                    _computerRock = true;
+                    _computerKabutar = true;
+                    _playerPaper = true;
+                    _playerRock = true;
+                    _playerKabutar = true;
+                    _playerMoves = [
+                      Demoji.moyai,
+                      Demoji.newspaper,
+                      Demoji.bird
+                    ];
+                    _computerMoves = [
+                      Demoji.moyai,
+                      Demoji.newspaper,
+                      Demoji.bird
+                    ];
+                  });
+                  Navigator.pop(context);
+                },
+                child: Text('Play Again'),
+              ),
+            ],
+          ),
+        );
+      });
+    }
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
