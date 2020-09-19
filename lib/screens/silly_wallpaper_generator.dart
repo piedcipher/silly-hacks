@@ -7,6 +7,7 @@ import 'package:shake/shake.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:silly_hacks/providers/app_provider.dart';
 import 'package:silly_hacks/utils/utils.dart';
+import 'package:vibration/vibration.dart';
 
 class SillyWallpaperGenerator extends StatefulWidget {
   @override
@@ -22,9 +23,7 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
     super.initState();
     _shakeDetector = ShakeDetector.autoStart(
       onPhoneShake: () {
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('Device Shake ${Demoji.smirk}'),
-        ));
+        Vibration.vibrate();
         setState(() {});
       },
     );

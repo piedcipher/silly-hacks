@@ -23,6 +23,7 @@ dependencies:
   path:
   share_extend:
   shared_preferences:
+  vibration:
 
 dev_dependencies:
   flutter_test:

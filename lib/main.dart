@@ -61,6 +61,7 @@ class SillyAppsHome extends StatelessWidget {
               style: TextStyle(fontSize: 30),
             ),
             title: Text('Silly Wallpaper Generator'),
+            subtitle: Text('How to: Click FAB or Shake Device'),
           ),
           Divider(),
           ListTile(
