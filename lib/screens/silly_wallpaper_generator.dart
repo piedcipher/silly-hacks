@@ -37,9 +37,11 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
             IconButton(
               onPressed: () async {
                 final wallpaper = await Utils.screenshotController.capture(
-                    path: p.join(Utils.appDocsDir.path,
-                        '${DateTime.now().millisecondsSinceEpoch.toString()}.png'),
-                    pixelRatio: 2);
+                  path: p.join(Utils.appDocsDir.path,
+                      '${DateTime.now().millisecondsSinceEpoch.toString()}.png'),
+                  pixelRatio: 1.5,
+                  delay: Duration(milliseconds: 100),
+                );
                 await ShareExtend.share(wallpaper.path, 'image');
               },
               icon: Icon(
@@ -52,29 +54,26 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
         body: Center(
           child: Screenshot(
             controller: Utils.screenshotController,
-            child: Opacity(
-              opacity: 0.7,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Utils.randomPrimaryColor,
-                      Utils.randomAccentColor,
-                      appProvider.primaryColor,
-                      appProvider.accentColor,
-                      Utils.randomPrimaryColor,
-                      Utils.randomAccentColor,
-                    ],
-                    begin: Utils.alignments[
-                        Utils.randomInstance.nextInt(Utils.alignments.length)],
-                    end: Utils.alignments[
-                        Utils.randomInstance.nextInt(Utils.alignments.length)],
-                  ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Utils.randomPrimaryColor,
+                    Utils.randomAccentColor,
+                    appProvider.primaryColor,
+                    appProvider.accentColor,
+                    Utils.randomPrimaryColor,
+                    Utils.randomAccentColor,
+                  ],
+                  begin: Utils.alignments[
+                      Utils.randomInstance.nextInt(Utils.alignments.length)],
+                  end: Utils.alignments[
+                      Utils.randomInstance.nextInt(Utils.alignments.length)],
                 ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(),
-                ),
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(),
               ),
             ),
           ),
