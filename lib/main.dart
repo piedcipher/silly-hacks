@@ -2,6 +2,7 @@ import 'package:demoji/demoji.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silly_hacks/providers/app_provider.dart';
 import 'package:silly_hacks/screens/silly_rock_paper_kabutar.dart';
 import 'package:silly_hacks/screens/silly_wallpaper_generator.dart';
@@ -10,6 +11,7 @@ import 'package:silly_hacks/utils/utils.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Utils.appDocsDir = await getApplicationDocumentsDirectory();
+  Utils.sharedPreferences = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
@@ -73,6 +75,7 @@ class SillyAppsHome extends StatelessWidget {
               style: TextStyle(fontSize: 30),
             ),
             title: Text('Silly Rock Paper Kabutar'),
+            subtitle: Text('Cause why not?'),
           ),
           Divider(),
         ],
