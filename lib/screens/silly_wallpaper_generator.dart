@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:demoji/demoji.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -16,15 +19,29 @@ class SillyWallpaperGenerator extends StatefulWidget {
 }
 
 class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
+  StreamController<bool> _showAlertOnVibrate;
+
   @override
   void initState() {
     super.initState();
+    _showAlertOnVibrate = StreamController<bool>.broadcast();
     ShakeDetector.autoStart(
       onPhoneShake: () {
         Vibration.vibrate();
         setState(() {});
+        _showAlertOnVibrate.add(true);
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+          await Future.delayed(Duration(milliseconds: 500),
+              () => _showAlertOnVibrate.add(false));
+        });
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _showAlertOnVibrate.close();
+    super.dispose();
   }
 
   @override
@@ -32,7 +49,7 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
     return Consumer<AppProvider>(
       builder: (_, appProvider, __) => Scaffold(
         appBar: AppBar(
-          title: Text('Silly Wallpaper Generator'),
+          title: Text('Wallpaper Generator'),
           actions: [
             IconButton(
               onPressed: () async {
@@ -78,14 +95,32 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Text(
-            Demoji.smirk,
-            style: TextStyle(fontSize: 30),
-          ),
-          onPressed: () {
-            appProvider.primaryColor = Utils.randomPrimaryColor;
-            appProvider.accentColor = Utils.randomAccentColor;
+        floatingActionButton: StreamBuilder<bool>(
+          stream: _showAlertOnVibrate.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data) {
+              return FloatingActionButton.extended(
+                icon: Icon(Icons.vibration),
+                label: Text(
+                  'Vibrating',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  appProvider.primaryColor = Utils.randomPrimaryColor;
+                  appProvider.accentColor = Utils.randomAccentColor;
+                },
+              );
+            }
+            return FloatingActionButton(
+              child: Text(
+                Demoji.smirk,
+                style: TextStyle(fontSize: 30),
+              ),
+              onPressed: () {
+                appProvider.primaryColor = Utils.randomPrimaryColor;
+                appProvider.accentColor = Utils.randomAccentColor;
+              },
+            );
           },
         ),
       ),
