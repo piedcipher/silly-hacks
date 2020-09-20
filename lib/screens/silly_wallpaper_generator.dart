@@ -20,6 +20,7 @@ class SillyWallpaperGenerator extends StatefulWidget {
 
 class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
   StreamController<bool> _showAlertOnVibrate;
+  bool _shouldDestroy = false;
 
   @override
   void initState() {
@@ -49,8 +50,22 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
     return Consumer<AppProvider>(
       builder: (_, appProvider, __) => Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Wallpaper Generator'),
           actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  _shouldDestroy = true;
+                });
+              },
+              tooltip: 'Wallpaper Destroyer',
+              icon: Text(
+                Demoji.smirk,
+                style: TextStyle(fontSize: 24),
+                semanticsLabel: 'Wallpaper Destroyer',
+              ),
+            ),
             IconButton(
               onPressed: () async {
                 final wallpaper = await Utils.screenshotController.capture(
@@ -61,6 +76,7 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
                 );
                 await ShareExtend.share(wallpaper.path, 'image');
               },
+              tooltip: 'Share Wallpaper',
               icon: Icon(
                 Icons.share,
                 semanticLabel: 'Share Wallpaper',
@@ -69,28 +85,38 @@ class _SillyWallpaperGeneratorState extends State<SillyWallpaperGenerator> {
           ],
         ),
         body: Center(
-          child: Screenshot(
-            controller: Utils.screenshotController,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Utils.randomPrimaryColor,
-                    Utils.randomAccentColor,
-                    appProvider.primaryColor,
-                    appProvider.accentColor,
-                    Utils.randomPrimaryColor,
-                    Utils.randomAccentColor,
-                  ],
-                  begin: Utils.alignments[
-                      Utils.randomInstance.nextInt(Utils.alignments.length)],
-                  end: Utils.alignments[
-                      Utils.randomInstance.nextInt(Utils.alignments.length)],
+          child: AnimatedOpacity(
+            curve: Curves.bounceInOut,
+            onEnd: () {
+              setState(() {
+                _shouldDestroy = false;
+              });
+            },
+            duration: Duration(seconds: _shouldDestroy ? 2 : 0),
+            opacity: _shouldDestroy ? 0 : 1,
+            child: Screenshot(
+              controller: Utils.screenshotController,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Utils.randomPrimaryColor,
+                      Utils.randomAccentColor,
+                      appProvider.primaryColor,
+                      appProvider.accentColor,
+                      Utils.randomPrimaryColor,
+                      Utils.randomAccentColor,
+                    ],
+                    begin: Utils.alignments[
+                        Utils.randomInstance.nextInt(Utils.alignments.length)],
+                    end: Utils.alignments[
+                        Utils.randomInstance.nextInt(Utils.alignments.length)],
+                  ),
                 ),
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(),
+                ),
               ),
             ),
           ),
