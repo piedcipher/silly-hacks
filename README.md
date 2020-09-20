@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/silly-hacks/master/readme-assets/app_icon.png"></p>
 
-<p align="center"><a href="https://devpost.com/software/silly-apps"><img src="https://img.shields.io/badge/Devpost-Submission-blue"></a>&nbsp;&nbsp;<a href="https://youtu.be/6ujhapg_qae"><img src="https://img.shields.io/badge/YouTube-Demo-red"></a></p>
+<p align="center"><a href="https://devpost.com/software/silly-apps"><img src="https://img.shields.io/badge/Devpost-Submission-blue"></a>&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=6uJHaPg_qaE&feature=youtu.be"><img src="https://img.shields.io/badge/YouTube-Demo-red"></a></p>
 
 <b><p align="center">:ghost: Collection of Silly Apps :satisfied:</p></b>
 
