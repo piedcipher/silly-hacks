@@ -1,4 +1,4 @@
-<h1 align="center">silly-hacks</h1>
+<h1 align="center">Silly Apps</h1>
 
 <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/silly-hacks/master/readme-assets/app_icon.png"></p>
 
