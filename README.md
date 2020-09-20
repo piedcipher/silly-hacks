@@ -9,8 +9,8 @@
 ## Overview
 
 - Silly Apps is a collection of Silly Apps. (only 2 ;_;)
-- There is silly wallpaper generator that can generate and destroy, well silly wallpapers. (such gradients, much wow)
-- Lastly, there is a rock paper kabutar, where you shake the device nothing really happens but either computer or you win, nothing. (so original, but efficient)
+- There is a silly wallpaper generator that can generate and destroy, well silly wallpapers by either tapping or shaking the device. (such gradients, much wow)
+- Lastly, there is 'rock paper kabutar', where you shake the device nothing really happens but either computer or you win, nothing. (so original, but efficient)
 
 ## Screenshots
 
